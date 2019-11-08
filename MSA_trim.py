@@ -1,29 +1,27 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 import pandas as pd
 
 #read in data
 df = pd.read_csv('test.csv')
-df
 
 
-# In[2]:
+# In[3]:
 
 
 ref_list = df.loc[0][1:df.shape[1]].tolist()
 
 
-# In[5]:
+# In[4]:
 
 
 # scan through each column, ignore the first column
 snp_columns = list(df)
 # let's get information about the reference sequence too
-
 
 #i is an index 
 #extract no. of samples
@@ -38,7 +36,6 @@ for i in snp_columns:
     if "reference_pos" in i :
         continue
     else:  
-        print(i)
         # able to get the column, now must change it to a list and 
         # cycle through by doing df[i][j].tolist() 
         snp_site = df[i][2:(len(df[i]))-2].tolist()
@@ -82,6 +79,20 @@ for i in snp_columns:
     snp_num = 0        
     snp_prop.clear()
     column_num += 1
-df
         
+
+
+# In[39]:
+
+
+#df.drop(df.index[[len(df[i])-1,len(df[i])-2]])
+for index,row in df.iterrows():
+    if row["X.reference_pos"] == "map-quality" or row["X.reference_pos"] == "annotations":
+        continue
+    else:
+        print(">{}".format(row["X.reference_pos"]))
+        seq = list(row[1:len(row)].to_string(index=False))
+        seq = [e for e in seq if e not in (' ', '\n')]
+        str_seq = ''.join(map(str, seq))
+        print(str_seq)
 
