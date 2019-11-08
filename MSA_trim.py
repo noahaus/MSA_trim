@@ -84,13 +84,3 @@ for i in snp_columns:
     snp_prop.clear()
     column_num += 1
         
-for index,row in df.iterrows():
-    if row["X.reference_pos"] == "map-quality" or row["X.reference_pos"] == "annotations":
-        continue
-    else:
-        print(">{}".format(row["X.reference_pos"]))
-        seq = list(row[1:len(row)].to_string(index=False))
-        seq = [e for e in seq if e not in (' ', '\n')]
-        str_seq = ''.join(map(str, seq))
-        print(str_seq)
-
