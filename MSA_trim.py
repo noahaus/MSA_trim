@@ -1,28 +1,23 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[2]:
-
-
 import pandas as pd
 
+#arguments
+#1. the csv
+csv = sys.argv[1]
+#2. indel percentage
+indel = sys.argv[2]
+#3. ambiguity percentage
+ambig = sys.argv[3]
+
 #read in data
-df = pd.read_csv('test.csv')
-
-
-# In[3]:
-
-
+df = pd.read_csv(csv)
 ref_list = df.loc[0][1:df.shape[1]].tolist()
-
-
-# In[4]:
-
 
 # scan through each column, ignore the first column
 snp_columns = list(df)
-# let's get information about the reference sequence too
 
+# let's get information about the reference sequence too
 #i is an index 
 #extract no. of samples
 column_num = 0
@@ -63,7 +58,7 @@ for i in snp_columns:
             del df[i]
         
         elif len(snp_prop) == 2:
-            if (ambig_num/sample_num > 0.5) or (indel_num/sample_num > 0.5) or (snp_num/sample_num > 0.9):
+            if (ambig_num/sample_num > ambig) or (indel_num/sample_num > indel) or (snp_num/sample_num > 0.9):
                 del df[i]
             else:
                 continue
@@ -80,12 +75,6 @@ for i in snp_columns:
     snp_prop.clear()
     column_num += 1
         
-
-
-# In[39]:
-
-
-#df.drop(df.index[[len(df[i])-1,len(df[i])-2]])
 for index,row in df.iterrows():
     if row["X.reference_pos"] == "map-quality" or row["X.reference_pos"] == "annotations":
         continue
