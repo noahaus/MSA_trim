@@ -7,9 +7,9 @@ import sys
 #1. the csv
 csv = sys.argv[1]
 #2. indel percentage
-indel = sys.argv[2]
+indel = float(sys.argv[2])
 #3. ambiguity percentage
-ambig = sys.argv[3]
+ambig = float(sys.argv[3])
 
 #read in data
 df = pd.read_csv(csv)
